@@ -2147,6 +2147,472 @@ nav.tabs button.viewer-restricted::after{
   .flow-modal-kicker{display:none!important}
   .flow-modal-head h3{font-size:14px!important}
 }
+
+/* ===== v13.6 · Diseño responsive para celular y tablet ===== */
+
+/* Tablet */
+@media (max-width: 900px){
+  body{overflow-x:hidden!important}
+
+  header.bar .bar-top,
+  .inicio-system-header .bar-top{
+    flex-direction:column!important;
+    align-items:flex-start!important;
+    gap:8px!important;
+    padding:10px 12px!important;
+  }
+
+  header.bar .bar-top>div:first-child,
+  .inicio-system-header .bar-top>div:first-child{
+    width:100%!important;
+  }
+
+  header.bar h1,
+  .inicio-system-header h1{
+    font-size:16px!important;
+    line-height:1.15!important;
+  }
+
+  header.bar .kicker,
+  .inicio-system-header .kicker{
+    font-size:8px!important;
+    line-height:1.2!important;
+  }
+
+  .user-info{
+    width:100%!important;
+    display:flex!important;
+    flex-wrap:wrap!important;
+    gap:6px!important;
+    align-items:center!important;
+  }
+
+  .user-info-text{
+    flex:1 1 100%!important;
+    font-size:11px!important;
+  }
+
+  .refresh-db-btn,
+  .header-fullscreen-btn,
+  .fullscreen-btn,
+  .logout-btn{
+    flex:1 1 auto!important;
+    min-width:0!important;
+    font-size:10px!important;
+    padding:7px 8px!important;
+    white-space:normal!important;
+  }
+
+  nav.tabs{
+    display:flex!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    gap:6px!important;
+    padding:7px 8px!important;
+    scrollbar-width:thin!important;
+  }
+
+  nav.tabs button{
+    flex:0 0 auto!important;
+    min-width:130px!important;
+    font-size:11px!important;
+    padding:8px 10px!important;
+  }
+
+  .inicio-executive-layout{
+    display:flex!important;
+    flex-direction:column!important;
+    gap:16px!important;
+    padding:14px 12px!important;
+    min-height:auto!important;
+  }
+
+  .inicio-seals{
+    width:100%!important;
+    display:grid!important;
+    grid-template-columns:repeat(4,1fr)!important;
+    gap:8px!important;
+    order:1!important;
+  }
+
+  .mission-shield{
+    width:100%!important;
+    min-height:96px!important;
+    padding:2px 2px 18px!important;
+  }
+
+  .mission-shield>img{
+    width:68px!important;
+    height:68px!important;
+  }
+
+  .mission-label{
+    font-size:8px!important;
+  }
+
+  .mission-tooltip{
+    display:none!important;
+  }
+
+  .flow-help-btn{
+    grid-column:1/-1!important;
+    width:100%!important;
+    max-width:none!important;
+    min-height:40px!important;
+    font-size:10px!important;
+  }
+
+  .flow-help-btn span:last-child{
+    max-width:none!important;
+  }
+
+  .inicio-executive-center{
+    width:100%!important;
+    gap:14px!important;
+    order:2!important;
+  }
+
+  .inicio-total-strip{
+    grid-template-columns:1fr!important;
+    gap:8px!important;
+    padding:8px!important;
+  }
+
+  .inicio-total-card{
+    min-height:78px!important;
+    padding:12px 16px!important;
+  }
+
+  .inicio-total-card strong{
+    font-size:27px!important;
+  }
+
+  .inicio-total-card span{
+    font-size:11px!important;
+  }
+
+  .inicio-chart-strip{
+    grid-template-columns:1fr!important;
+    gap:10px!important;
+    padding:8px!important;
+  }
+
+  .inicio-chart-card{
+    min-height:280px!important;
+    padding:12px!important;
+  }
+
+  .inicio-chart-canvas{
+    height:230px!important;
+  }
+
+  .inicio-exec-panel{
+    width:100%!important;
+    max-height:none!important;
+    order:3!important;
+  }
+
+  .exec-grid{
+    grid-template-columns:1fr 1fr!important;
+  }
+
+  .exec-wide{
+    grid-column:1/-1!important;
+  }
+
+  .content{
+    padding:10px!important;
+  }
+
+  .grid{
+    grid-template-columns:1fr!important;
+  }
+
+  .grid.full{
+    grid-template-columns:1fr!important;
+  }
+
+  fieldset{
+    padding:12px!important;
+  }
+
+  /* Nominal: mantener tabla utilizable mediante desplazamiento horizontal controlado */
+  .table-wrap,
+  .nominal-table-wrap{
+    overflow-x:auto!important;
+    -webkit-overflow-scrolling:touch!important;
+  }
+
+  #nominalTable{
+    min-width:1120px!important;
+  }
+
+  .nominal-class-tabs{
+    flex-wrap:wrap!important;
+  }
+
+  .nominal-class-tab{
+    flex:1 1 180px!important;
+  }
+
+  /* Modales */
+  .modal-box,
+  .edit-modal,
+  .system-dialog,
+  .flow-modal{
+    width:96vw!important;
+    max-width:96vw!important;
+  }
+
+  .edit-modal{
+    height:92vh!important;
+    max-height:92vh!important;
+  }
+
+  .flow-modal{
+    height:94vh!important;
+    max-height:94vh!important;
+  }
+
+  .flow-modal-body{
+    padding:6px!important;
+  }
+
+  .flow-modal-body img{
+    max-width:100%!important;
+    max-height:100%!important;
+  }
+}
+
+/* Celular */
+@media (max-width: 600px){
+  header.bar,
+  .inicio-system-header{
+    position:static!important;
+  }
+
+  header.bar h1,
+  .inicio-system-header h1{
+    font-size:14px!important;
+  }
+
+  .user-info{
+    display:grid!important;
+    grid-template-columns:1fr 1fr!important;
+  }
+
+  .user-info-text{
+    grid-column:1/-1!important;
+  }
+
+  .refresh-db-btn,
+  .header-fullscreen-btn,
+  .fullscreen-btn,
+  .logout-btn{
+    width:100%!important;
+    font-size:9px!important;
+    min-height:34px!important;
+  }
+
+  nav.tabs{
+    padding:6px!important;
+  }
+
+  nav.tabs button{
+    min-width:112px!important;
+    font-size:10px!important;
+    padding:7px 8px!important;
+  }
+
+  .nav-icon{
+    transform:scale(.9)!important;
+  }
+
+  .inicio-executive-layout{
+    padding:10px 8px!important;
+    gap:12px!important;
+  }
+
+  .inicio-seals{
+    grid-template-columns:repeat(2,1fr)!important;
+    gap:6px!important;
+  }
+
+  .mission-shield{
+    min-height:90px!important;
+  }
+
+  .mission-shield>img{
+    width:62px!important;
+    height:62px!important;
+  }
+
+  .flow-help-btn{
+    grid-column:1/-1!important;
+  }
+
+  .exec-grid{
+    grid-template-columns:1fr!important;
+  }
+
+  .exec-wide{
+    grid-column:auto!important;
+  }
+
+  .exec-head{
+    flex-direction:column!important;
+    align-items:flex-start!important;
+    gap:5px!important;
+  }
+
+  .exec-metric{
+    min-height:auto!important;
+  }
+
+  .inicio-chart-card{
+    min-height:245px!important;
+  }
+
+  .inicio-chart-canvas{
+    height:205px!important;
+  }
+
+  .inicio-chart-card h2{
+    font-size:15px!important;
+  }
+
+  .flow-modal-overlay{
+    padding:4px!important;
+  }
+
+  .flow-modal{
+    width:98vw!important;
+    max-width:98vw!important;
+    height:96vh!important;
+    max-height:96vh!important;
+    border-radius:8px!important;
+  }
+
+  .flow-modal-head{
+    padding:7px 9px!important;
+  }
+
+  .flow-modal-head h3{
+    font-size:12px!important;
+    line-height:1.15!important;
+  }
+
+  .flow-modal-body{
+    padding:4px!important;
+    overflow:hidden!important;
+  }
+
+  /* En celular se rota visualmente mejor si la infografía panorámica ocupa todo lo posible */
+  .flow-modal-body img{
+    width:100%!important;
+    height:auto!important;
+    max-height:100%!important;
+    object-fit:contain!important;
+  }
+
+  .system-dialog{
+    width:94vw!important;
+  }
+
+  .system-dialog-head h3{
+    font-size:15px!important;
+  }
+
+  .system-dialog-body{
+    font-size:12px!important;
+    padding:14px!important;
+  }
+
+  .system-dialog-actions{
+    flex-direction:column-reverse!important;
+  }
+
+  .system-dialog-actions button{
+    width:100%!important;
+  }
+
+  .edit-modal-head{
+    padding:10px!important;
+  }
+
+  .edit-modal-body{
+    padding:10px!important;
+  }
+
+  .edit-modal-footer{
+    flex-direction:column!important;
+  }
+
+  .edit-modal-footer button{
+    width:100%!important;
+  }
+
+  /* Formularios */
+  input,select,textarea,button{
+    max-width:100%!important;
+    box-sizing:border-box!important;
+  }
+
+  input,select,textarea{
+    font-size:16px!important; /* evita zoom automático de iOS */
+  }
+
+  label{
+    font-size:11px!important;
+  }
+
+  legend{
+    font-size:13px!important;
+  }
+
+  .status-bar{
+    flex-wrap:wrap!important;
+    gap:5px!important;
+  }
+
+  .status-item{
+    font-size:9px!important;
+  }
+
+  /* Estadísticas */
+  .stats-grid,
+  .chart-grid{
+    grid-template-columns:1fr!important;
+  }
+
+  canvas{
+    max-width:100%!important;
+  }
+
+  /* Reportes: vista previa móvil */
+  .report-preview,
+  .report-sheet{
+    width:100%!important;
+    min-width:0!important;
+  }
+}
+
+/* Muy angosto */
+@media (max-width: 380px){
+  .inicio-seals{
+    grid-template-columns:1fr 1fr!important;
+  }
+  .mission-shield>img{
+    width:54px!important;
+    height:54px!important;
+  }
+  nav.tabs button{
+    min-width:102px!important;
+  }
+  .inicio-total-card strong{
+    font-size:24px!important;
+  }
+}
 </style>
 </head>
 
@@ -3014,22 +3480,28 @@ nav.tabs button.viewer-restricted::after{
     const inicioInfo = document.getElementById('userInfoInicio');
     if(inicioInfo) inicioInfo.textContent = texto;
 
-    const esVisor = !!(session && session.rol === 'VISOR');
+    const rol = session ? session.rol : '';
+    const esVisor = rol === 'VISOR';
+    const esDPM = rol === 'PERSMIL';
 
-    // En Solo visualización los accesos permanecen visibles para conservar la
-    // estructura del sistema, pero Formulario y Configuración quedan bloqueados.
     document.querySelectorAll('nav.tabs [data-goto]').forEach(el => {
       const destino=el.dataset.goto;
       el.style.display='';
-      const restringido=esVisor && (destino==='formulario' || destino==='admin');
+      const restringido = (destino==='admin' && !esDPM) || (destino==='formulario' && esVisor);
       el.classList.toggle('viewer-restricted', restringido);
       el.setAttribute('aria-disabled', restringido ? 'true' : 'false');
+      if(restringido){
+        el.title = destino==='admin'
+          ? 'Restringido: solo Dirección de Personal Militar'
+          : 'Restringido: usuario de solo visualización';
+      }else{
+        el.removeAttribute('title');
+      }
     });
 
-    // Fuera del menú, los controles administrativos/carga sí se ocultan cuando corresponde.
     document.querySelectorAll('.admin-only').forEach(el => {
       if(el.closest('nav.tabs')) return;
-      el.style.display = (session && esControlTotal(session.rol)) ? '' : 'none';
+      el.style.display = (session && esDPM) ? '' : 'none';
     });
     document.querySelectorAll('.carga-only').forEach(el => {
       if(el.closest('nav.tabs')) return;
@@ -3063,7 +3535,7 @@ nav.tabs button.viewer-restricted::after{
     // Gate: sin sesión, todo redirige a login (salvo login mismo).
     if(name !== 'login' && !session){ name = 'login'; }
     // Gate: administración es exclusiva de PERSMIL.
-    if(name === 'admin' && (!session || !esControlTotal(session.rol))){ name = 'inicio'; }
+    if(name === 'admin' && (!session || session.rol !== 'PERSMIL')){ name = 'inicio'; }
     if(session && session.rol === 'VISOR' && !['inicio','estadisticas','nominal'].includes(name)){
       name = 'inicio';
     }
@@ -3094,10 +3566,20 @@ nav.tabs button.viewer-restricted::after{
     const acceso=e.target.closest('nav.tabs [data-goto]');
     if(!acceso) return;
     const session=getSession();
-    if(session && session.rol==='VISOR' && ['formulario','admin'].includes(acceso.dataset.goto)){
-      e.preventDefault();
-      e.stopPropagation();
-      e.stopImmediatePropagation();
+    if(!session) return;
+    const destino=acceso.dataset.goto;
+
+    if(destino==='admin' && session.rol!=='PERSMIL'){
+      e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
+      mensajeSistema(
+        'La administración de usuarios y las altas se encuentran reservadas exclusivamente al personal de la Dirección de Personal Militar.',
+        'Solo Administradores del Sistema'
+      );
+      return;
+    }
+
+    if(destino==='formulario' && session.rol==='VISOR'){
+      e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
       mensajeSistema(
         'Este acceso no se encuentra habilitado para usuarios de solo visualización.',
         'Solo Administradores del Sistema'
@@ -3473,7 +3955,7 @@ async function loadExecutiveSummary(){
         cenopeLoginBtn.disabled = false;
         return;
       }
-      setSession({ token:data.token, rol:'CENOPE', grado:vd.usuario.grado || data.grado, nombre:vd.usuario.nombre || data.nombre, dni:vd.usuario.dni || dni, temporal:true });
+      setSession({ token:data.token, rol:'CENOPE', grado:vd.usuario.grado || data.grado, nombre:vd.usuario.nombre || data.nombre, dni:vd.usuario.dni || dni, temporal:true, idSesion:data.idSesion || vd.usuario.id || '', inicioTurno:Date.now(), horasTurno:data.horasTurno || 24 });
       cenopeLoginForm.reset();
       cenopeLoginMsg.textContent = '';
       limpiarVerificacionCenope();
@@ -4936,11 +5418,21 @@ async function loadExecutiveSummary(){
     const session = getSession();
     if(!session) return false;
     if(session.rol === 'VISOR') return false;
-    if(esControlTotal(session.rol)) return true;
-    if(record['CargadoPor'] !== session.nombre) return false;
+    if(session.rol === 'PERSMIL' || session.rol === 'DESARROLLADOR') return true;
+
     const fechaCarga = record['FechaCarga'] ? new Date(record['FechaCarga']) : null;
     if(!fechaCarga || isNaN(fechaCarga.getTime())) return false;
-    return (Date.now() - fechaCarga.getTime()) <= 24 * 3600 * 1000;
+    const dentroDe24hs = (Date.now() - fechaCarga.getTime()) <= 24 * 3600 * 1000;
+
+    if(session.rol === 'CENOPE'){
+      if(String(record['RolCarga']||'') !== 'CENOPE') return false;
+      const idSesionCarga=String(record['IdSesionCarga']||'');
+      if(idSesionCarga && session.idSesion) return idSesionCarga===String(session.idSesion);
+      // Compatibilidad con registros previos a la columna IdSesionCarga.
+      return record['CargadoPor'] === session.nombre && dentroDe24hs;
+    }
+
+    return record['CargadoPor'] === session.nombre && dentroDe24hs;
   }
 
   function formatFechaHora(iso){
