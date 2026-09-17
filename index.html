@@ -1898,12 +1898,32 @@
   @media print{
     @page{size:A4 landscape;margin:10mm;}
     html,body{background:#fff !important;}
-    body > *:not(#reportOverlay){display:none !important;}
+    body > *:not(#reportOverlay):not(#caseDetailOverlay){display:none !important;}
     #reportOverlay{
       position:static !important;
       display:block !important;
       background:#fff !important;
       overflow:visible !important;
+    }
+    #caseDetailOverlay.open{
+      position:static !important;
+      display:block !important;
+      background:#fff !important;
+      overflow:visible !important;
+    }
+    #caseDetailOverlay .modal-box{
+      position:static !important;
+      width:auto !important;
+      max-width:none !important;
+      max-height:none !important;
+      overflow:visible !important;
+      box-shadow:none !important;
+      border-radius:0 !important;
+    }
+    #caseDetailOverlay .case-detail-body{
+      overflow:visible !important;
+      max-height:none !important;
+      background:#fff !important;
     }
     .no-print{display:none !important;}
     .report-scroll{padding:0 !important;overflow:visible !important;}
@@ -1963,7 +1983,7 @@
   font-size:10px;
 }
 .nominal-class-tab.active .nominal-tab-count{background:#17243d;color:#fff}
-.reclass-btn,.restore-btn{
+.reclass-btn,.restore-btn,.delete-btn{
   border:1px solid #b88852 !important;
   color:#f3d6b5 !important;
   background:#30251d !important;
@@ -1977,6 +1997,12 @@
   border-color:#5a9c78 !important;
   color:#c7f3d9 !important;
   background:#173126 !important;
+}
+.delete-btn{
+  border-color:#a5453f !important;
+  color:#f7d3d0 !important;
+  background:#33191a !important;
+  margin-left:5px;
 }
 .reclassified-row{opacity:.90}
 .reclassified-row td{background:rgba(181,134,76,.06)}
@@ -2632,6 +2658,15 @@ nav.tabs button.viewer-restricted::after{
             <label>DNI</label>
             <input type="text" id="loginDni" inputmode="numeric" maxlength="8" pattern="\d{7,8}" required autocomplete="off">
           </div>
+          <p class="login-sub" id="loginPasswordHint" style="display:none;"></p>
+          <div class="field" id="loginPasswordField" style="display:none;">
+            <label id="loginPasswordLabel">Contraseña</label>
+            <input type="password" id="loginPassword" autocomplete="off">
+          </div>
+          <div class="field" id="loginPasswordConfirmField" style="display:none;">
+            <label>Confirmar contraseña</label>
+            <input type="password" id="loginPasswordConfirm" autocomplete="off">
+          </div>
           <button type="submit" class="primary" id="loginBtn">Ingresar</button>
           <div class="msg" id="loginMsg" style="margin-top:12px;"></div>
         </form>
@@ -2673,7 +2708,6 @@ nav.tabs button.viewer-restricted::after{
       <div class="user-info">
         <span class="user-info-text" id="userInfoInicio"></span>
         <button class="refresh-db-btn" data-refresh-db type="button">↻ Actualizar base de datos</button>
-        <button class="header-fullscreen-btn" data-fullscreen type="button">⛶ Pantalla completa</button>
         <button class="logout-btn" data-logout>Cerrar sesión</button>
       </div>
     </div>
@@ -2749,7 +2783,6 @@ nav.tabs button.viewer-restricted::after{
       <div class="user-info">
         <span class="user-info-text"></span>
         <button class="refresh-db-btn" data-refresh-db type="button">↻ Actualizar base de datos</button>
-        <button class="header-fullscreen-btn" data-fullscreen type="button">⛶ Pantalla completa</button>
         <button class="logout-btn" data-logout>Cerrar sesión</button>
       </div>
     </div>
@@ -2816,26 +2849,11 @@ nav.tabs button.viewer-restricted::after{
       </fieldset>
 
       <fieldset>
-        <legend>Destino / Provincia</legend>
+        <legend>Destino</legend>
         <div class="grid">
           <div class="field">
             <label>Unidad</label>
             <input type="text" name="Unidad" id="unidadInput">
-          </div>
-          <div class="field">
-            <label>Provincia</label>
-            <select name="Provincia">
-              <option value=""></option>
-              <option>Buenos Aires</option><option>Ciudad Autónoma de Buenos Aires</option>
-              <option>Catamarca</option><option>Chaco</option><option>Chubut</option>
-              <option>Córdoba</option><option>Corrientes</option><option>Entre Ríos</option>
-              <option>Formosa</option><option>Jujuy</option><option>La Pampa</option>
-              <option>La Rioja</option><option>Mendoza</option><option>Misiones</option>
-              <option>Neuquén</option><option>Río Negro</option><option>Salta</option>
-              <option>San Juan</option><option>San Luis</option><option>Santa Cruz</option>
-              <option>Santa Fe</option><option>Santiago del Estero</option>
-              <option>Tierra del Fuego</option><option>Tucumán</option>
-            </select>
           </div>
         </div>
       </fieldset>
@@ -2898,6 +2916,21 @@ nav.tabs button.viewer-restricted::after{
               <option>Ámbito Civil</option>
             </select>
           </div>
+          <div class="field">
+            <label>Provincia</label>
+            <select name="Provincia">
+              <option value=""></option>
+              <option>Buenos Aires</option><option>Ciudad Autónoma de Buenos Aires</option>
+              <option>Catamarca</option><option>Chaco</option><option>Chubut</option>
+              <option>Córdoba</option><option>Corrientes</option><option>Entre Ríos</option>
+              <option>Formosa</option><option>Jujuy</option><option>La Pampa</option>
+              <option>La Rioja</option><option>Mendoza</option><option>Misiones</option>
+              <option>Neuquén</option><option>Río Negro</option><option>Salta</option>
+              <option>San Juan</option><option>San Luis</option><option>Santa Cruz</option>
+              <option>Santa Fe</option><option>Santiago del Estero</option>
+              <option>Tierra del Fuego</option><option>Tucumán</option>
+            </select>
+          </div>
         </div>
         <div class="grid full">
           <div class="field">
@@ -2936,7 +2969,6 @@ nav.tabs button.viewer-restricted::after{
         <span class="user-info-text"></span>
         <button class="refresh-db-btn" data-refresh-db type="button">↻ Actualizar base de datos</button>
         <button class="report-btn" id="generateReportBtn" type="button">▤ Generar informe</button>
-        <button class="header-fullscreen-btn" data-fullscreen type="button">⛶ Pantalla completa</button>
         <button class="logout-btn" data-logout>Cerrar sesión</button>
       </div>
     </div>
@@ -2977,7 +3009,6 @@ nav.tabs button.viewer-restricted::after{
       <div class="user-info">
         <span class="user-info-text"></span>
         <button class="refresh-db-btn" data-refresh-db type="button">↻ Actualizar base de datos</button>
-        <button class="header-fullscreen-btn" data-fullscreen type="button">⛶ Pantalla completa</button>
         <button class="logout-btn" data-logout>Cerrar sesión</button>
       </div>
     </div>
@@ -3127,12 +3158,13 @@ nav.tabs button.viewer-restricted::after{
           <p class="edit-kicker">Ficha del caso</p>
           <h2 id="caseDetailTitle">Registro N° <strong id="caseDetailNro"></strong></h2>
         </div>
-        <button type="button" class="modal-close-x" id="caseDetailClose" aria-label="Cerrar ventana">×</button>
+        <button type="button" class="modal-close-x no-print" id="caseDetailClose" aria-label="Cerrar ventana">×</button>
       </div>
       <div class="case-detail-body" id="caseDetailBody"></div>
-      <div class="edit-modal-footer">
+      <div class="edit-modal-footer no-print">
         <div></div>
         <div class="edit-modal-actions">
+          <button type="button" class="edit-cancel-btn" id="caseDetailPrintBtn">Imprimir ficha individual</button>
           <button type="button" class="edit-cancel-btn" id="caseDetailCloseBtn">Cerrar</button>
         </div>
       </div>
@@ -3151,7 +3183,6 @@ nav.tabs button.viewer-restricted::after{
       <div class="user-info">
         <span class="user-info-text"></span>
         <button class="refresh-db-btn" data-refresh-db type="button">↻ Actualizar base de datos</button>
-        <button class="header-fullscreen-btn" data-fullscreen type="button">⛶ Pantalla completa</button>
         <button class="logout-btn" data-logout>Cerrar sesión</button>
       </div>
     </div>
@@ -3517,13 +3548,6 @@ nav.tabs button.viewer-restricted::after{
   });
 
 
-  document.addEventListener('click', function(e){
-    if(e.target.closest('[data-fullscreen]')){
-      if(!document.fullscreenElement){ document.documentElement.requestFullscreen?.(); }
-      else{ document.exitFullscreen?.(); }
-    }
-  });
-
   /* ---------------- Router interno de vistas ---------------- */
   const views = ['login','inicio','formulario','estadisticas','nominal','admin'];
   let statsLoaded = false;
@@ -3794,18 +3818,60 @@ async function loadExecutiveSummary(){
   /* ---------------- Login ---------------- */
   const loginForm = document.getElementById('loginForm');
   const loginMsg = document.getElementById('loginMsg');
+  const loginDniInput = document.getElementById('loginDni');
+  const loginPasswordHint = document.getElementById('loginPasswordHint');
+  const loginPasswordField = document.getElementById('loginPasswordField');
+  const loginPasswordLabel = document.getElementById('loginPasswordLabel');
+  const loginPasswordInput = document.getElementById('loginPassword');
+  const loginPasswordConfirmField = document.getElementById('loginPasswordConfirmField');
+  const loginPasswordConfirmInput = document.getElementById('loginPasswordConfirm');
+  let loginPasswordModo = null; // null | 'crear' | 'ingresar'
+
+  function resetLoginPasswordUI(){
+    loginPasswordModo = null;
+    loginPasswordHint.style.display = 'none';
+    loginPasswordHint.textContent = '';
+    loginPasswordField.style.display = 'none';
+    loginPasswordConfirmField.style.display = 'none';
+    loginPasswordInput.value = '';
+    loginPasswordConfirmInput.value = '';
+  }
+
+  loginDniInput.addEventListener('input', resetLoginPasswordUI);
 
   loginForm.addEventListener('submit', async function(e){
     e.preventDefault();
-    const dni = document.getElementById('loginDni').value.replace(/\D/g,'');
+    const dni = loginDniInput.value.replace(/\D/g,'');
+
+    if(loginPasswordModo === 'crear'){
+      const p1 = loginPasswordInput.value;
+      const p2 = loginPasswordConfirmInput.value;
+      if(p1.length < 4){
+        loginMsg.textContent = 'La contraseña debe tener al menos 4 caracteres.';
+        loginMsg.className = 'msg err';
+        return;
+      }
+      if(p1 !== p2){
+        loginMsg.textContent = 'Las contraseñas no coinciden.';
+        loginMsg.className = 'msg err';
+        return;
+      }
+    } else if(loginPasswordModo === 'ingresar' && !loginPasswordInput.value){
+      loginMsg.textContent = 'Ingrese su contraseña.';
+      loginMsg.className = 'msg err';
+      return;
+    }
+
     loginMsg.textContent = 'Verificando…';
     loginMsg.className = 'msg';
 
     try{
+      const payload = { action:'login', dni };
+      if(loginPasswordModo) payload.password = loginPasswordInput.value;
       const res = await fetch(API_URL, {
         method:'POST',
         headers:{ 'Content-Type':'text/plain;charset=utf-8' },
-        body: JSON.stringify({ action:'login', dni })
+        body: JSON.stringify(payload)
       });
       const data = await res.json();
       if(data.ok && data.token && data.rol && data.dni){
@@ -3821,8 +3887,30 @@ async function loadExecutiveSummary(){
         }
         setSession({ token:data.token, rol:vd.usuario.rol, nombre:vd.usuario.nombre, dni:vd.usuario.dni });
         loginForm.reset();
+        resetLoginPasswordUI();
         loginMsg.textContent = '';
         goto('inicio');
+      } else if(data.requiereCrearClave){
+        loginPasswordModo = 'crear';
+        loginPasswordLabel.textContent = 'Cree una contraseña';
+        loginPasswordHint.textContent = 'Es su primer ingreso: cree una contraseña. El sistema se la pedirá en sus próximos accesos.';
+        loginPasswordHint.style.display = '';
+        loginPasswordField.style.display = '';
+        loginPasswordConfirmField.style.display = '';
+        loginMsg.textContent = data.error || 'Cree una contraseña para continuar.';
+        loginMsg.className = 'msg';
+        loginPasswordInput.focus();
+      } else if(data.requierePassword){
+        loginPasswordModo = 'ingresar';
+        loginPasswordLabel.textContent = 'Contraseña';
+        loginPasswordHint.textContent = 'Ingrese la contraseña que creó en su primer ingreso.';
+        loginPasswordHint.style.display = '';
+        loginPasswordField.style.display = '';
+        loginPasswordConfirmField.style.display = 'none';
+        loginMsg.textContent = data.error || 'Ingrese su contraseña.';
+        loginMsg.className = 'msg err';
+        loginPasswordInput.value = '';
+        loginPasswordInput.focus();
       } else {
         loginMsg.textContent = data.error || 'No se pudo iniciar sesión.';
         loginMsg.className = 'msg err';
@@ -4314,7 +4402,7 @@ async function loadExecutiveSummary(){
       if(data.found){
         const gradoAbbr = normalizeGrado(data.grado);
         gradoSelect.value = gradoAbbr;
-        renderArmaOptions(data.categoria);
+        renderArmaOptions((data.categoria === 'Oficial' || data.categoria === 'Suboficial') ? data.categoria : null);
         const armaAbbr = normalizeArma(data.arma);
         armaSelect.value = armaAbbr;
 
@@ -5007,10 +5095,15 @@ async function loadExecutiveSummary(){
     });
 
     const provEntries = sortedEntries(countBy(records,'Provincia'));
+    const provOptions = interactiveOptions('Provincia', false, true);
+    provOptions.scales.y.ticks.autoSkip = false;
+    const provCanvas = document.getElementById('chartProv');
+    const provCanvasWrap = provCanvas ? provCanvas.closest('.canvas-wrap') : null;
+    if(provCanvasWrap) provCanvasWrap.style.height = Math.max(360, provEntries.length * 26) + 'px';
     safeCreateChart('prov', 'chartProv', {
       type:'bar',
       data:{ labels: provEntries.map(e=>e[0]), datasets:[{ label:'Casos', data: provEntries.map(e=>e[1]), backgroundColor:'#a44c45', hoverBackgroundColor:'#bd5e55', borderRadius:8, borderSkipped:false, maxBarThickness:38 }]},
-      options: interactiveOptions('Provincia', false, true)
+      options: provOptions
     });
 
     const unidadEntries = sortedEntries(countBy(records,'Unidad')).slice(0,12);
@@ -5522,12 +5615,13 @@ async function loadExecutiveSummary(){
       return;
     }
 
-    nominalTbody.innerHTML = filtered.map(r => {
+    nominalTbody.innerHTML = filtered.map((r, nominalRowIndex) => {
       const editable = puedeEditar(r);
       const estado = estadoCaso(r);
       const dpm = esPersonalDPM();
       const clasificacion=estadoClasificacion(r);
       const nro = escapeHtml(r['Nro'] || '');
+      const nroMostrado = nominalRowIndex + 1;
 
       const estadoHtml = `
         <div class="case-state-toggle" role="group" aria-label="Estado del caso">
@@ -5541,7 +5635,7 @@ async function loadExecutiveSummary(){
 
       return `
         <tr data-case-row="${nro}" class="${clasificacion==='Reclasificado'?'reclassified-row':''}">
-          <td>${nro}</td>
+          <td>${nroMostrado}</td>
           <td>${escapeHtml(formatFechaNominal(r['Fecha del Hecho']))}</td>
           <td>${escapeHtml(r['Grado'] || '')}</td>
           <td>${escapeHtml(r['Arma/Servicio'] || '')}</td>
@@ -5560,7 +5654,7 @@ async function loadExecutiveSummary(){
                     ? `<button type="button" class="edit-btn" data-nro="${nro}">Editar</button>`
                     : `<button type="button" class="edit-btn" disabled title="Solo lectura">Editar</button>`}
                    ${dpm ? `<button type="button" class="reclass-btn" data-reclass-nro="${nro}">Reclas.</button>` : ''}`
-                : `${dpm ? `<button type="button" class="restore-btn" data-restore-nro="${nro}">Reincorporar</button>` : ''}`
+                : `${dpm ? `<button type="button" class="restore-btn" data-restore-nro="${nro}">Reincorporar</button><button type="button" class="delete-btn" data-delete-nro="${nro}">Eliminar</button>` : ''}`
               }
             </div>
           </td>
@@ -5577,6 +5671,9 @@ async function loadExecutiveSummary(){
     });
     nominalTbody.querySelectorAll('.restore-btn[data-restore-nro]').forEach(btn=>{
       btn.addEventListener('click',e=>{e.stopPropagation(); reincorporarCaso(btn.dataset.restoreNro);});
+    });
+    nominalTbody.querySelectorAll('.delete-btn[data-delete-nro]').forEach(btn=>{
+      btn.addEventListener('click',e=>{e.stopPropagation(); eliminarCasoDefinitivo(btn.dataset.deleteNro);});
     });
 
     nominalTbody.querySelectorAll('button.case-state-option[data-state-nro]').forEach(btn => {
@@ -5637,6 +5734,7 @@ async function loadExecutiveSummary(){
   const caseDetailNro=document.getElementById('caseDetailNro');
   const caseDetailClose=document.getElementById('caseDetailClose');
   const caseDetailCloseBtn=document.getElementById('caseDetailCloseBtn');
+  const caseDetailPrintBtn=document.getElementById('caseDetailPrintBtn');
 
   function detailItem(label,value){
     return `<div class="case-detail-item"><span class="label">${escapeHtml(label)}</span><div class="value">${escapeHtml(value || '—')}</div></div>`;
@@ -5713,6 +5811,11 @@ async function loadExecutiveSummary(){
   function cerrarResumenCaso(){caseDetailOverlay.classList.remove('open');}
   caseDetailClose.addEventListener('click',cerrarResumenCaso);
   caseDetailCloseBtn.addEventListener('click',cerrarResumenCaso);
+  if(caseDetailPrintBtn){
+    caseDetailPrintBtn.addEventListener('click',()=>{
+      setTimeout(()=>window.print(),60);
+    });
+  }
   caseDetailOverlay.addEventListener('click',e=>{if(e.target===caseDetailOverlay)cerrarResumenCaso();});
 
 
@@ -5759,6 +5862,24 @@ async function loadExecutiveSummary(){
       statsLoaded=false;
       await loadNominal();
     }catch(err){ await mensajeSistema(err.message||'No se pudo reincorporar el caso.','Error'); }
+  }
+
+  async function eliminarCasoDefinitivo(nro){
+    if(!esPersonalDPM()) return;
+    const r=NOMINAL_RECORDS.find(x=>String(x['Nro'])===String(nro));
+    const nombre=r ? String(r['Apellido y Nombres']||'') : '';
+    if(!(await confirmarSistema('El caso N° '+nro+(nombre?' — '+nombre:'')+' se retirará por completo del sistema (no volverá a aparecer en Nominal, estadísticas ni informes). Queda archivado para auditoría, fuera de la aplicación. ¿Confirma la eliminación?','Eliminar caso'))) return;
+    try{
+      const res=await fetch(API_URL,{
+        method:'POST',
+        headers:{'Content-Type':'text/plain;charset=utf-8'},
+        body:JSON.stringify({action:'eliminarCaso',token:getSession().token,nro:nro})
+      });
+      const data=await res.json();
+      if(!data.ok) throw new Error(data.error||'No se pudo eliminar el caso.');
+      statsLoaded=false;
+      await loadNominal();
+    }catch(err){ await mensajeSistema(err.message||'No se pudo eliminar el caso.','Error'); }
   }
 
   async function cambiarEstadoCaso(nro,nuevoEstado){
@@ -5955,9 +6076,10 @@ async function loadExecutiveSummary(){
         <div class="user-row">
           <div>
             <div class="u-name">${u.grado ? u.grado + ' ' : ''}${u.nombre} <span class="badge-rol">${ROLES_LABEL[u.rol] || u.rol}</span></div>
-            <div class="u-meta">DNI ${u.dni || '—'} · ${u.activo ? 'Activo' : 'Dado de baja'}</div>
+            <div class="u-meta">DNI ${u.dni || '—'} · ${u.activo ? 'Activo' : 'Dado de baja'}${u.requierePassword ? ' · ' + (u.tieneClave ? 'Con contraseña creada' : 'Sin contraseña creada') : ''}</div>
           </div>
           <div class="user-actions">
+            ${u.requierePassword ? `<button type="button" class="small-btn" data-blanquear="${u.id}">Blanquear Clave</button>` : ''}
             <button type="button" class="small-btn ${u.activo ? 'danger' : ''}" data-toggle="${u.id}" data-activo="${u.activo}">
               ${u.activo ? 'Dar de baja' : 'Reactivar'}
             </button>
@@ -5973,6 +6095,20 @@ async function loadExecutiveSummary(){
             headers:{ 'Content-Type':'text/plain;charset=utf-8' },
             body: JSON.stringify({ action:'cambiarEstadoUsuario', token:getSession().token, uid:btn.dataset.toggle, activo: !activo })
           });
+          loadUsuarios();
+        });
+      });
+
+      usuariosList.querySelectorAll('[data-blanquear]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          if(!(await confirmarSistema('El usuario deberá crear una contraseña nueva la próxima vez que ingrese con su DNI. ¿Confirma blanquear su contraseña?','Blanquear contraseña'))) return;
+          const res = await fetch(API_URL, {
+            method:'POST',
+            headers:{ 'Content-Type':'text/plain;charset=utf-8' },
+            body: JSON.stringify({ action:'blanquearClave', token:getSession().token, uid:btn.dataset.blanquear })
+          });
+          const data = await res.json();
+          if(!data.ok) await mensajeSistema(data.error || 'No se pudo blanquear la contraseña.','Error');
           loadUsuarios();
         });
       });
