@@ -1958,6 +1958,23 @@
   gap:8px;
   margin:0 0 10px;
 }
+.nominal-ultimos-title{
+  font:800 16px Arial,sans-serif;
+  color:#1a2744;
+  margin:18px 0 8px;
+}
+#nominalUltimosWrap{
+  margin-bottom:24px;
+}
+#nominalUltimosTable{
+  font-size:11px;
+}
+#nominalUltimosTable th{
+  padding:6px 12px;
+}
+#nominalUltimosTable td{
+  padding:6px 12px;
+}
 .nominal-class-tab{
   border:1px solid #3a4963;
   background:#17243d;
@@ -2931,6 +2948,10 @@ nav.tabs button.viewer-restricted::after{
               <option>Tierra del Fuego</option><option>Tucumán</option>
             </select>
           </div>
+          <div class="field">
+            <label>Fecha de la Carga</label>
+            <input type="text" id="fechaCargaInfo" disabled>
+          </div>
         </div>
         <div class="grid full">
           <div class="field">
@@ -3030,6 +3051,21 @@ nav.tabs button.viewer-restricted::after{
       <input type="text" id="nominalSearch" placeholder="Buscar por nombre, DNI o unidad…">
       <span class="conn"><span class="dot" id="nominalStatusDot"></span><span id="nominalStatusText">Cargando…</span></span>
     </div>
+    <h2 class="nominal-ultimos-title">Últimos casos registrados</h2>
+    <div class="table-wrap" id="nominalUltimosWrap">
+      <table class="nominal" id="nominalUltimosTable">
+        <thead>
+          <tr>
+            <th>Nro</th>
+            <th>Fecha de Carga</th>
+            <th>Apellido y Nombres</th>
+            <th>Unidad</th>
+            <th>Forma</th>
+          </tr>
+        </thead>
+        <tbody id="nominalUltimosTbody"></tbody>
+      </table>
+    </div>
     <div class="table-scroll-top" id="nominalScrollTop" aria-label="Desplazamiento horizontal superior"><div id="nominalScrollTopInner"></div></div>
     <div class="table-wrap" id="nominalTableWrap">
       <table class="nominal" id="nominalTable">
@@ -3047,6 +3083,7 @@ nav.tabs button.viewer-restricted::after{
             <th class="sortable-th" data-sort-key="Medio Empleado">Medio empleado <span class="sort-mark"></span></th>
             <th class="sortable-th" data-sort-key="Resultado">Resultado <span class="sort-mark"></span></th>
             <th class="sortable-th" data-sort-key="EstadoCaso">Estado <span class="sort-mark"></span></th>
+            <th class="sortable-th" data-sort-key="FechaCarga">Fecha de Carga <span class="sort-mark"></span></th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -3150,27 +3187,27 @@ nav.tabs button.viewer-restricted::after{
       </form>
     </div>
   </div>
+</section>
 
-  <div class="modal-overlay" id="caseDetailOverlay" role="dialog" aria-modal="true" aria-labelledby="caseDetailTitle">
-    <div class="modal-box wide case-detail-modal">
-      <div class="edit-modal-head">
-        <div>
-          <p class="edit-kicker">Ficha del caso</p>
-          <h2 id="caseDetailTitle">Registro N° <strong id="caseDetailNro"></strong></h2>
-        </div>
-        <button type="button" class="modal-close-x no-print" id="caseDetailClose" aria-label="Cerrar ventana">×</button>
+<div class="modal-overlay" id="caseDetailOverlay" role="dialog" aria-modal="true" aria-labelledby="caseDetailTitle">
+  <div class="modal-box wide case-detail-modal">
+    <div class="edit-modal-head">
+      <div>
+        <p class="edit-kicker">Ficha del caso</p>
+        <h2 id="caseDetailTitle">Registro N° <strong id="caseDetailNro"></strong></h2>
       </div>
-      <div class="case-detail-body" id="caseDetailBody"></div>
-      <div class="edit-modal-footer no-print">
-        <div></div>
-        <div class="edit-modal-actions">
-          <button type="button" class="edit-cancel-btn" id="caseDetailPrintBtn">Imprimir ficha individual</button>
-          <button type="button" class="edit-cancel-btn" id="caseDetailCloseBtn">Cerrar</button>
-        </div>
+      <button type="button" class="modal-close-x no-print" id="caseDetailClose" aria-label="Cerrar ventana">×</button>
+    </div>
+    <div class="case-detail-body" id="caseDetailBody"></div>
+    <div class="edit-modal-footer no-print">
+      <div></div>
+      <div class="edit-modal-actions">
+        <button type="button" class="edit-cancel-btn" id="caseDetailPrintBtn">Imprimir ficha individual</button>
+        <button type="button" class="edit-cancel-btn" id="caseDetailCloseBtn">Cerrar</button>
       </div>
     </div>
   </div>
-</section>
+</div>
 
 <!-- ================= VISTA: ADMINISTRACIÓN ================= -->
 <section id="view-admin" class="view">
@@ -3580,7 +3617,11 @@ nav.tabs button.viewer-restricted::after{
         console.error('Error en carga automática de Inicio:',err);
       });
     }
-    if(name === 'formulario'){ checkFormConnection(); checkPersonalConnection(); }
+    if(name === 'formulario'){
+      checkFormConnection(); checkPersonalConnection();
+      const fechaCargaInfo = document.getElementById('fechaCargaInfo');
+      if(fechaCargaInfo) fechaCargaInfo.value = formatFechaHora(new Date());
+    }
     if(name === 'estadisticas' && !statsLoaded){ statsLoaded = true; loadStats(); }
     if(name === 'nominal'){ nominalLoaded = false; loadNominal(); }
     if(name === 'admin') loadUsuarios();
@@ -4519,6 +4560,7 @@ async function loadExecutiveSummary(){
         formMsg.textContent = 'Registro N° ' + data.nro + ' guardado correctamente.';
         formMsg.className = 'msg ok';
         form.reset();
+        { const fechaCargaInfo = document.getElementById('fechaCargaInfo'); if(fechaCargaInfo) fechaCargaInfo.value = formatFechaHora(new Date()); }
         medioOtroField.style.display = 'none';
         lastDniBuscado = '';
         casosExistentesDni = [];
@@ -5553,10 +5595,11 @@ async function loadExecutiveSummary(){
       nominalStatusDot.className = 'dot on';
       nominalStatusText.textContent = 'Conectado (' + activos + ' casos activos)';
       renderNominalTable();
+      renderUltimosCasos();
     } catch(err){
       nominalStatusDot.className = 'dot off';
       nominalStatusText.textContent = 'Sin conexión a la Hoja de Registro';
-      nominalTbody.innerHTML = '<tr><td colspan="11" class="empty">No se pudieron cargar los datos.</td></tr>';
+      nominalTbody.innerHTML = '<tr><td colspan="14" class="empty">No se pudieron cargar los datos.</td></tr>';
     }
   }
 
@@ -5610,7 +5653,7 @@ async function loadExecutiveSummary(){
       const msg=nominalClassMode==='Reclasificado'
         ? 'No hay casos descartados o reclasificados.'
         : 'Sin resultados.';
-      nominalTbody.innerHTML = '<tr><td colspan="13" class="empty">'+msg+'</td></tr>';
+      nominalTbody.innerHTML = '<tr><td colspan="14" class="empty">'+msg+'</td></tr>';
       setTimeout(syncNominalTopScroll,0);
       return;
     }
@@ -5647,6 +5690,7 @@ async function loadExecutiveSummary(){
           <td>${escapeHtml(r['Medio Empleado'] || '')}</td>
           <td>${escapeHtml(r['Resultado'] || '')}</td>
           <td>${estadoHtml}</td>
+          <td>${escapeHtml(formatFechaHora(r['FechaCarga']))}</td>
           <td>
             <div class="nominal-actions">
               ${clasificacion==='Activo'
@@ -5693,6 +5737,31 @@ async function loadExecutiveSummary(){
     });
 
     setTimeout(syncNominalTopScroll,0);
+  }
+
+  function renderUltimosCasos(){
+    const tbody = document.getElementById('nominalUltimosTbody');
+    if(!tbody) return;
+    const ultimos = NOMINAL_RECORDS
+      .filter(r => r['FechaCarga'])
+      .slice()
+      .sort((a,b) => new Date(b['FechaCarga']) - new Date(a['FechaCarga']))
+      .slice(0,6);
+
+    if(ultimos.length === 0){
+      tbody.innerHTML = '<tr><td colspan="5" class="empty">Sin resultados.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = ultimos.map(r => `
+      <tr>
+        <td>${escapeHtml(r['Nro'] || '')}</td>
+        <td>${escapeHtml(formatFechaHora(r['FechaCarga']))}</td>
+        <td>${escapeHtml(r['Apellido y Nombres'] || '')}</td>
+        <td>${escapeHtml(r['Unidad'] || '')}</td>
+        <td>${escapeHtml(r['Suicidio/Intento de Suicidio'] || '')}</td>
+      </tr>
+    `).join('');
   }
 
 
@@ -5769,6 +5838,7 @@ async function loadExecutiveSummary(){
       </div>
 
       <div class="case-detail-grid">
+        ${detailItem('DNI',r['DNI'])}
         ${detailItem('Arma / Servicio',r['Arma/Servicio'])}
         ${detailItem('Situación de revista',r['Sit Rev'])}
         ${detailItem('Edad',r['Edad'])}
