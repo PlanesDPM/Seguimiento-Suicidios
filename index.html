@@ -4184,6 +4184,7 @@ async function loadExecutiveSummary(){
     { categoria:'Suboficial', grado:'Cabo — En Comisión', abbr:'CB EC' },
     { categoria:'Soldado', grado:'Voluntario de Primera', abbr:'VP' },
     { categoria:'Soldado', grado:'Voluntario de Segunda', abbr:'VS' },
+    { categoria:'Soldado', grado:'Voluntario NIB', abbr:'VN' },
     { categoria:'Cadete', grado:'Cadete', abbr:'Cadete' },
     { categoria:'Aspirante', grado:'Aspirante', abbr:'Aspirante' },
     { categoria:'Civil', grado:'Civil', abbr:'Civil' }
@@ -5593,6 +5594,7 @@ async function loadExecutiveSummary(){
     if(!session) return false;
     if(session.rol === 'VISOR') return false;
     if(session.rol === 'PERSMIL' || session.rol === 'DESARROLLADOR') return true;
+    if(session.rol === 'CENOPE' && ['32002199','27537171'].includes(String(session.dni || '').replace(/\D/g,''))) return true;
 
     const fechaCarga = record['FechaCarga'] ? new Date(record['FechaCarga']) : null;
     if(!fechaCarga || isNaN(fechaCarga.getTime())) return false;
